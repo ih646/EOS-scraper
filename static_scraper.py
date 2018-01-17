@@ -5,12 +5,11 @@ import csv
 import os
 import time
 
+#keeps track of how long the script runs
+starttime=time.time()
 
-
-#timer keeps track of how long the script runs
-timer=0
-
-while timer<=10:
+#the datacollection is set for two minutes i.e 120 seconds, but can easily be modified by changing the time of the while loop
+while time.time()-starttime<=500:
 
 	#list of user agents as a precaution to avaoid getting banned for scraping
 	userAgents = [
@@ -54,7 +53,6 @@ while timer<=10:
 	
 	else:		
 		
-		print 'what'
 	    #extracts page HTML		
 		soup=BeautifulSoup(r.content,'html.parser',from_encoding="UTF-8")
 		#contains the HTML that contains all the price information
@@ -86,12 +84,9 @@ while timer<=10:
 	 	#the datafields for our CSV   
 	 	fieldnames=['USD','Vol(USD)','ETH','Vol(ETH)','Time']
 
-	 	print 'row'
-
 	 	#if file is not already created, script will create a new csv and will write the datafields on the top row
 	 	if (os.path.isfile('EOS.csv')==False):
 
-	 		print 'hello'
 	 		csv_file=open('EOS.csv','w+')
 	 		csv_writer=csv.DictWriter(csv_file,fieldnames=fieldnames,lineterminator='\n')
 	 		csv_writer.writeheader()
@@ -100,14 +95,13 @@ while timer<=10:
 	 			'Vol(USD)': volUSD,
 	 			'ETH':ETHprice(),
 	 			'Vol(ETH)':ETHvol(),
-	 			'Time': timer		
+	 			'Time': time.time()-starttime		
 	 			}
 	 		)
 
 
 	 	else:			
 	 		
-	 		print 'blah'
 	 		csv_file=open('EOS.csv','a')
 	 		csv_writer=csv.DictWriter(csv_file,fieldnames=fieldnames,lineterminator='\n')
 	 		csv_writer.writerow({			
@@ -115,7 +109,7 @@ while timer<=10:
 	 			'Vol(USD)': volUSD,
 	 			'ETH':ETHprice(),
 	 			'Vol(ETH)':ETHvol(),
-	 			'Time': timer	
+	 			'Time': time.time()-starttime
 
 	 			}
 	 		)
@@ -123,8 +117,5 @@ while timer<=10:
 
 
 	 	csv_file.close()
-	#incrementing the time 
-	timer+=10
-	time.sleep(10)
 
 

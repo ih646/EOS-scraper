@@ -74,8 +74,7 @@ def vol():
 	Vol_ETH=float(Vol_ETH)
 	return Vol_ETH
 
-#function that find the marketprice of EOS is ETH and converts it to a float
-def vol():				
+#function that find the marketprice of EOS is ETH and converts it to a float			
 def marketPrice():
 	#checks to see if we have correctly extracted the html
 	browser2.refresh()
