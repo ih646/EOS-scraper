@@ -17,6 +17,7 @@ import requests
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Automates the browser Firefox
 browser = webdriver.Firefox( executable_path='geckodriver.exe')
 browser.implicitly_wait(30)
 
@@ -24,19 +25,23 @@ browser.implicitly_wait(30)
 browser.get('https://www.worldcoinindex.com/account/login')
 time.sleep(5)
 
+#logging into the account
 Email=browser.find_element_by_name("Email").clear()
 Email=browser.find_element_by_name("Email")
 
 password = browser.find_element_by_name('Password').clear()
 password = browser.find_element_by_name("Password")
 
+#login information.If you wish to use own account, then the arguements below should be changed to your own login info
 Email.send_keys('bhubon047@gmail.com')
 password.send_keys('mvemjsunp123A@'+Keys.RETURN)
 time.sleep(3)
 
+#directing to page with all the data
 browser.get('https://www.worldcoinindex.com/coin/eos')
 (browser.page_source).encode('ascii', 'ignore')
 
+#clicking the dropdown menu and changing price format to Etherum
 dropdown=browser.find_element_by_id('dd')
 item=browser.find_element_by_xpath('/html/body/div[4]/div[2]/div[2]/nav/div[2]/div[3]/section/div/div/ul/li[2]/a')
 ETH=ActionChains(browser).move_to_element(dropdown).click(item)
@@ -44,10 +49,12 @@ ETH.perform()
 
 time.sleep(5)
 
+#second browser to collect market price
 browser2=webdriver.Firefox(executable_path='geckodriver.exe')
 browser2.implicitly_wait(30)
 browser2.get("https://eosscan.io/")
 
+#function that find the price of EOS is ETH and converts it to a float
 def ETHprice():
 	WebDriverWait(browser,10).until(EC.presence_of_element_located((By.XPATH,"/html/body/div[4]/div[3]/div[1]/div[1]/table/tbody/tr/td[4]")))
 	coin_price=browser.find_element_by_xpath("/html/body/div[4]/div[3]/div[1]/div[1]/table/tbody/tr/td[4]")
@@ -56,6 +63,7 @@ def ETHprice():
 	price=float(price)
 	return price
 
+#function that find the volume of EOS is ETH and converts it to a float
 def vol():
 
 	WebDriverWait(browser,10).until(EC.presence_of_element_located((By.XPATH,'//*[@id="market-table"]/tbody/tr/td[8]/a')))
@@ -66,8 +74,8 @@ def vol():
 	Vol_ETH=float(Vol_ETH)
 	return Vol_ETH
 
-fieldnames=['ETHprice', 'Vol(ETH)','marketprice','Time']
-				
+#function that find the marketprice of EOS is ETH and converts it to a float
+def vol():				
 def marketPrice():
 	#checks to see if we have correctly extracted the html
 	browser2.refresh()
@@ -83,15 +91,17 @@ def marketPrice():
 	
 	else:	
 		return float(marketprice)
-		
+
+#datafields for our CSV file
+fieldnames=['ETHprice', 'Vol(ETH)','marketprice','Time']
+
+#starting point of our timer		
 starttime=time.time()
-print starttime
 
-
+#the datacollection is set for two minutes i.e 120 seconds, but can easily be modified by changing the time of the while loop
 while time.time()-starttime<120:
 	if (os.path.isfile('EOS_realtime.csv')==False):
 
-		print 'hello'
 		csv_file=open('EOS_realtime.csv','w+')
 		csv_writer=csv.DictWriter(csv_file,fieldnames=fieldnames,lineterminator='\n')
 		csv_writer.writeheader()
