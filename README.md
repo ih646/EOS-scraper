@@ -6,10 +6,10 @@ This is a EOS web scraper that I made using python to gather data on the crypto 
 
 Once you've cloned the repository into your local machine you will need to install geckodriver.exe, beautifulsoup and selenium to make the code run.This can be done easily by using the command line to go to the directory where the files are located and typing.
 
-'pip install -U selenium'
+`pip install -U selenium`
 
 and then
 
-'pip install beautifulsoup4'
+`pip install beautifulsoup4`
 
 geckodriver can de downloaded from the internet and installed inside the folder with the relevant files. The code can then be run from the command line as usual.
