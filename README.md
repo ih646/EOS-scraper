@@ -14,4 +14,4 @@ and then
 
 geckodriver can de downloaded from the internet and installed inside the folder with the relevant files. The code can then be run from the command line as usual.
 
-Note - The static scraper was just an experiment for me to learn beautifulsoup and was not meant to be used for any practical data collection; it only works if it is run for a very long time. This why the EOSplot.py only plots the data from the realtime scraper.
+Note - The static scraper was just an experiment for me to learn beautifulsoup and was not meant to be used for any practical data collection; it only works if it is run for a very long time. This why the EOSplot.py only plots the data from the realtime scraper. The CSV files I've included in my repo is just an example of what the format of the CSV looks like. Therefore, the already existant CSV files should be deleted before running the program for fresh data collection.
